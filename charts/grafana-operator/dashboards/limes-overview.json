@@ -12,15 +12,17 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1587039133366,
+  "id": 101,
+  "iteration": 1587552371678,
   "links": [],
   "panels": [
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "quota": "red"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -29,7 +31,7 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 9,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -38,13 +40,13 @@
       "legend": {
         "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -56,13 +58,13 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "repeat": "service",
+      "repeat": "resource",
       "repeatDirection": "v",
       "scopedVars": {
-        "service": {
+        "resource": {
           "selected": false,
-          "text": "compute",
-          "value": "compute"
+          "text": "cores",
+          "value": "cores"
         }
       },
       "seriesOverrides": [],
@@ -71,16 +73,29 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "limes_project_quota{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
+          "expr": "limes_project_usage{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "usage",
+          "refId": "B"
+        },
+        {
+          "expr": "limes_project_quota{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "quota",
           "refId": "A"
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Quota: $service",
+      "title": "$service:$resource",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -118,7 +133,9 @@
       }
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "quota": "red"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -127,22 +144,22 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 9,
-        "x": 9,
-        "y": 0
+        "w": 24,
+        "x": 0,
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 3,
       "legend": {
         "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -154,13 +171,15 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "repeat": "service",
+      "repeat": null,
       "repeatDirection": "v",
+      "repeatIteration": 1587552371678,
+      "repeatPanelId": 2,
       "scopedVars": {
-        "service": {
+        "resource": {
           "selected": false,
-          "text": "compute",
-          "value": "compute"
+          "text": "instances",
+          "value": "instances"
         }
       },
       "seriesOverrides": [],
@@ -169,16 +188,29 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "limes_project_usage{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
+          "expr": "limes_project_usage{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "usage",
           "refId": "B"
+        },
+        {
+          "expr": "limes_project_quota{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "quota",
+          "refId": "A"
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Usage: $service",
+      "title": "$service:$resource",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -216,7 +248,9 @@
       }
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "quota": "red"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -225,22 +259,22 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 9,
+        "w": 24,
         "x": 0,
-        "y": 9
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 4,
       "legend": {
         "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -254,13 +288,13 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
+      "repeatIteration": 1587552371678,
       "repeatPanelId": 2,
       "scopedVars": {
-        "service": {
+        "resource": {
           "selected": false,
-          "text": "dns",
-          "value": "dns"
+          "text": "instances_zg1mlx1.medium",
+          "value": "instances_zg1mlx1.medium"
         }
       },
       "seriesOverrides": [],
@@ -269,16 +303,29 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "limes_project_quota{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
+          "expr": "limes_project_usage{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "usage",
+          "refId": "B"
+        },
+        {
+          "expr": "limes_project_quota{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "quota",
           "refId": "A"
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Quota: $service",
+      "title": "$service:$resource",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -316,7 +363,9 @@
       }
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "quota": "red"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -325,122 +374,22 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 9,
-        "x": 9,
-        "y": 9
-      },
-      "hiddenSeries": false,
-      "id": 9,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
-      "repeatPanelId": 3,
-      "scopedVars": {
-        "service": {
-          "selected": false,
-          "text": "dns",
-          "value": "dns"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "limes_project_usage{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Usage: $service",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 9,
+        "w": 24,
         "x": 0,
-        "y": 18
+        "y": 27
       },
       "hiddenSeries": false,
       "id": 5,
       "legend": {
         "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -454,13 +403,13 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
+      "repeatIteration": 1587552371678,
       "repeatPanelId": 2,
       "scopedVars": {
-        "service": {
+        "resource": {
           "selected": false,
-          "text": "keppel",
-          "value": "keppel"
+          "text": "ram",
+          "value": "ram"
         }
       },
       "seriesOverrides": [],
@@ -469,16 +418,29 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "limes_project_quota{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
+          "expr": "limes_project_usage{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "usage",
+          "refId": "B"
+        },
+        {
+          "expr": "limes_project_quota{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "quota",
           "refId": "A"
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Quota: $service",
+      "title": "$service:$resource",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -516,7 +478,9 @@
       }
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "quota": "red"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -525,122 +489,22 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 9,
-        "x": 9,
-        "y": 18
-      },
-      "hiddenSeries": false,
-      "id": 10,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
-      "repeatPanelId": 3,
-      "scopedVars": {
-        "service": {
-          "selected": false,
-          "text": "keppel",
-          "value": "keppel"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "limes_project_usage{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Usage: $service",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 9,
+        "w": 24,
         "x": 0,
-        "y": 27
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 6,
       "legend": {
         "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -654,13 +518,13 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
+      "repeatIteration": 1587552371678,
       "repeatPanelId": 2,
       "scopedVars": {
-        "service": {
+        "resource": {
           "selected": false,
-          "text": "network",
-          "value": "network"
+          "text": "server_group_members",
+          "value": "server_group_members"
         }
       },
       "seriesOverrides": [],
@@ -669,16 +533,29 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "limes_project_quota{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
+          "expr": "limes_project_usage{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "usage",
+          "refId": "B"
+        },
+        {
+          "expr": "limes_project_quota{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "quota",
           "refId": "A"
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Quota: $service",
+      "title": "$service:$resource",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -716,7 +593,9 @@
       }
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "quota": "red"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -725,122 +604,22 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 9,
-        "x": 9,
-        "y": 27
-      },
-      "hiddenSeries": false,
-      "id": 11,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
-      "repeatPanelId": 3,
-      "scopedVars": {
-        "service": {
-          "selected": false,
-          "text": "network",
-          "value": "network"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "limes_project_usage{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Usage: $service",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 9,
+        "w": 24,
         "x": 0,
-        "y": 36
+        "y": 45
       },
       "hiddenSeries": false,
       "id": 7,
       "legend": {
         "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -854,13 +633,13 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
+      "repeatIteration": 1587552371678,
       "repeatPanelId": 2,
       "scopedVars": {
-        "service": {
+        "resource": {
           "selected": false,
-          "text": "sharev2",
-          "value": "sharev2"
+          "text": "server_groups",
+          "value": "server_groups"
         }
       },
       "seriesOverrides": [],
@@ -869,316 +648,29 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "limes_project_quota{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
+          "expr": "limes_project_usage{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "usage",
+          "refId": "B"
+        },
+        {
+          "expr": "limes_project_quota{service=\"$service\", resource=\"$resource\"}",
+          "legendFormat": "quota",
           "refId": "A"
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Quota: $service",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 9,
-        "x": 9,
-        "y": 36
-      },
-      "hiddenSeries": false,
-      "id": 12,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
-      "repeatPanelId": 3,
-      "scopedVars": {
-        "service": {
-          "selected": false,
-          "text": "sharev2",
-          "value": "sharev2"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "limes_project_usage{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Usage: $service",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 9,
-        "x": 0,
-        "y": 45
-      },
-      "hiddenSeries": false,
-      "id": 8,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
-      "repeatPanelId": 2,
-      "scopedVars": {
-        "service": {
-          "selected": false,
-          "text": "volumev2",
-          "value": "volumev2"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "limes_project_quota{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Quota: $service",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 9,
-        "x": 9,
-        "y": 45
-      },
-      "hiddenSeries": false,
-      "id": 13,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatDirection": "v",
-      "repeatIteration": 1587039133366,
-      "repeatPanelId": 3,
-      "scopedVars": {
-        "service": {
-          "selected": false,
-          "text": "volumev2",
-          "value": "volumev2"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "limes_project_usage{service=\"$service\"}",
-          "legendFormat": "{{ resource }}:{{ project_id }}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Usage: $service",
+      "title": "$service:$resource",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1216,7 +708,8 @@
       }
     }
   ],
-  "schemaVersion": 21,
+  "refresh": false,
+  "schemaVersion": 19,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1224,22 +717,46 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "text": "compute",
+          "value": "compute"
+        },
+        "datasource": "maia-prometheus",
+        "definition": "label_values(limes_project_usage, service)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": "label_values(limes_project_usage, service)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
           "tags": [],
           "text": "All",
           "value": "$__all"
         },
         "datasource": "maia-prometheus",
-        "definition": "query_result(limes_project_quota)",
+        "definition": "label_values(limes_project_usage{service=\"$service\"}, resource)",
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": false,
-        "name": "service",
+        "name": "resource",
         "options": [],
-        "query": "query_result(limes_project_quota)",
+        "query": "label_values(limes_project_usage{service=\"$service\"}, resource)",
         "refresh": 1,
-        "regex": "/service=\"([a-zA-Z0-9]*)?\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -1251,7 +768,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -1269,7 +786,7 @@
     ]
   },
   "timezone": "",
-  "title": "GaaS Resource Management!",
+  "title": "GaaS Resource Management",
   "uid": "3WLvfawZz",
-  "version": 3
+  "version": 18
 }
