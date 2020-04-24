@@ -41,6 +41,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+prometheus: infra-frontend
+
 record: {}
 
 openstack: {}
@@ -56,7 +58,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-# Basic alerts for GaS operator
-alerts:
-  prometheus: infra-frontend
