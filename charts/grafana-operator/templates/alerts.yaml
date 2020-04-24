@@ -9,7 +9,6 @@ metadata:
   labels:
     tier: os
     type: alerting-rules
-    prometheus: {{ required ".Values.prometheus missing" $.Values.prometheus }}
 
 spec:
 {{ printf "%s" $bytes | indent 2 }}
