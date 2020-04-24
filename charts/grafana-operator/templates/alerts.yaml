@@ -5,12 +5,9 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 
 metadata:
-  name: gas-{{ printf "%s" $path | replace "/" "-" }}
+  name: {{ printf "%s" $path | replace "/" "-" }}
   labels:
     tier: os
     type: alerting-rules
-
-spec:
-{{ printf "%s" $bytes | indent 2 }}
 
 {{- end }}
