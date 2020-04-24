@@ -1,0 +1,15 @@
+{{- range $path,$bytes := .Files.Glob "alerts/grafana-operator.alerts" }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+
+metadata:
+  name: {{ $.Values.prometheus }}
+  labels:
+    type: alerting-rules
+    prometheus: {{ $.Values.prometheus }}
+
+spec:
+{{ printf "%s" $bytes | indent 2}}
+
+{{- end }}
