@@ -10,4 +10,7 @@ metadata:
     tier: os
     type: alerting-rules
 
+spec:
+{{ printf "%s" $bytes | indent 2 }}
+
 {{- end }}
