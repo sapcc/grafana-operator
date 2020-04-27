@@ -10,7 +10,9 @@ import (
 	"github.com/integr8ly/grafana-operator/v3/pkg/controller/common"
 	"github.com/integr8ly/grafana-operator/v3/pkg/controller/config"
 	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/tools/record"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
@@ -58,6 +60,7 @@ func add(mgr manager.Manager, r reconcile.Reconciler, autodetectChannel chan sch
 
 	// Watch for changes to primary resource GrafanaDashboard
 	err = c.Watch(&source.Kind{Type: &grafanav1alpha1.GrafanaDashboard{}}, &handler.EnqueueRequestForObject{})
+	err = c.Watch(&source.Kind{Type: &grafanav1alpha1.Grafana{}}, &handler.EnqueueRequestForObject{})
 	if err == nil {
 		log.Info("Starting dashboard controller")
 	}
@@ -79,12 +82,28 @@ type ReconcileGrafanaDashboard struct {
 	state    common.ControllerState
 }
 
+func watchSecondaryResource(c controller.Controller, resource runtime.Object) error {
+	return c.Watch(&source.Kind{Type: resource}, &handler.EnqueueRequestForOwner{
+		OwnerType: &grafanav1alpha1.Grafana{},
+	})
+}
+
 // The Controller will requeue the Request to be processed again if the returned error is non-nil or
 // Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
 func (r *ReconcileGrafanaDashboard) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	if request.Namespace == "grafana-operator" {
-		return r.addDefaultDashboards(request)
+		if err := r.addDefaultDashboards(request); err != nil {
+			return reconcile.Result{Requeue: true}, nil
+		}
+		return reconcile.Result{Requeue: false}, nil
 	}
+	if err := r.client.Get(context.Background(), types.NamespacedName{Namespace: request.Namespace, Name: request.Name}, &grafanav1alpha1.Grafana{}); err == nil {
+		if err := r.addDefaultDashboards(request); err != nil {
+			return reconcile.Result{Requeue: true}, nil
+		}
+		return reconcile.Result{Requeue: false}, nil
+	}
+
 	gr := &grafanav1alpha1.GrafanaList{}
 	if err := r.client.List(context.Background(), gr, client.InNamespace(request.Namespace)); err != nil {
 		if errors.IsNotFound(err) {
@@ -261,13 +280,14 @@ func (r *ReconcileGrafanaDashboard) manageError(dashboard *grafanav1alpha1.Grafa
 	}
 }
 
-func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Request) (rc reconcile.Result, err error) {
+func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Request) (err error) {
 	gr := &grafanav1alpha1.GrafanaList{}
 	if err = r.client.List(r.context, gr); err != nil {
 		return
 	}
 	if len(gr.Items) == 0 {
-		return rc, defaultErrors.New("no grafana instances found")
+		log.Info("no grafana instances found")
+		return
 	}
 
 	db := &grafanav1alpha1.GrafanaDashboardList{}
@@ -276,19 +296,18 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 	}
 
 	if len(db.Items) == 0 {
-		return rc, defaultErrors.New("no default dashboards found")
+		log.Info("no default dashboards found")
+		return
 	}
 
 	for _, g := range gr.Items {
 		client, err := r.getClient(&g)
 		if err != nil {
-			rc.Requeue = true
 			log.Error(err, "error adding default dashboard")
-			return rc, err
+			return err
 		}
 		if g.Status.Phase != grafanav1alpha1.PhaseReconciling {
-			log.Info("grafana instance not yet ready")
-			rc.Requeue = true
+			err = fmt.Errorf("grafana instance %s not yet ready", g.GetName())
 			continue
 		}
 		for _, d := range db.Items {
@@ -299,8 +318,7 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 			}
 			processed, err := pipeline.ProcessDashboard(knownHash)
 			if err != nil {
-				log.Error(err, "error adding default dashboard")
-				rc.Requeue = true
+				err = fmt.Errorf("error adding default dashboard to grafana instance %s: error %s", g.GetName(), err.Error())
 				continue
 			}
 			if processed == nil {
@@ -308,8 +326,7 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 			}
 			_, err = client.CreateOrUpdateDashboard(processed)
 			if err != nil {
-				log.Error(err, "error adding default dashboard")
-				rc.Requeue = true
+				err = fmt.Errorf("error adding default dashboard to grafana instance %s: error %s", g.GetName(), err.Error())
 				continue
 			}
 			if g.Spec.Config.Dashboards.DashboardHash == nil {
@@ -317,8 +334,7 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 			}
 			g.Spec.Config.Dashboards.DashboardHash[d.Name] = pipeline.NewHash()
 			if err = r.client.Update(r.context, &g); err != nil {
-				log.Error(err, "error adding default dashboard")
-				rc.Requeue = true
+				err = fmt.Errorf("error adding default dashboard to grafana instance %s: error %s", g.GetName(), err.Error())
 				continue
 			}
 		}
