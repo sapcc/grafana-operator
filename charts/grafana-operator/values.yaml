@@ -41,6 +41,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+prometheus: infra-frontend
+
 record: {}
 
 openstack: {}
