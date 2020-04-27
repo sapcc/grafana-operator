@@ -60,3 +60,10 @@ $ operator-sdk up local --namespace=<namespace> --operator-flags="<flags to pass
 ## Notifier provisioning
 
 Grafana has provisioning support for multiple channels (notifiers) of alerts. The operator does currently not support this type of provisioning. An empty directory is mounted at the expected location to prevent a warning in the grafana log. This feature might be supported in the future. 
+
+
+# Monitoring
+rate(workqueue_work_duration_seconds_sum{service="grafana-operator"}[10m])
+rate(controller_runtime_reconcile_errors_total [10m])
+controller_runtime_reconcile_total{service="grafana-operator", result="success"}
+rate(controller_runtime_reconcile_total{service="grafana-operator", result="requeue_after"}[30m]) 
