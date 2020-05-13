@@ -283,6 +283,7 @@ func (r *ReconcileGrafanaDashboard) manageError(dashboard *grafanav1alpha1.Grafa
 }
 
 func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Request) (err error) {
+	log.Info(fmt.Sprintf("start adding default dashboards %s", request.Name))
 	gr := &grafanav1alpha1.GrafanaList{}
 	if err = r.client.List(r.context, gr); err != nil {
 		return
@@ -326,6 +327,7 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 			if processed == nil {
 				continue
 			}
+			log.Info(fmt.Sprintf("adding default dashboard %s to %s", d.Name, g.Name))
 			_, err = client.CreateOrUpdateDashboard(processed)
 			if err != nil {
 				err = fmt.Errorf("error adding default dashboard to grafana instance %s: error %s", g.GetName(), err.Error())
