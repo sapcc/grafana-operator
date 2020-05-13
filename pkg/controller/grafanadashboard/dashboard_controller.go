@@ -93,12 +93,14 @@ func watchSecondaryResource(c controller.Controller, resource runtime.Object) er
 func (r *ReconcileGrafanaDashboard) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	if request.Namespace == "grafana-operator" {
 		if err := r.addDefaultDashboards(request); err != nil {
+			log.Error(err, fmt.Sprintf("cannot set default dashboard for %s", request.Name))
 			return reconcile.Result{Requeue: true}, nil
 		}
 		return reconcile.Result{Requeue: false}, nil
 	}
 	if err := r.client.Get(context.Background(), types.NamespacedName{Namespace: request.Namespace, Name: request.Name}, &grafanav1alpha1.Grafana{}); err == nil {
 		if err := r.addDefaultDashboards(request); err != nil {
+			log.Error(err, fmt.Sprintf("cannot set default dashboard for %s", request.Name))
 			return reconcile.Result{Requeue: true}, nil
 		}
 		return reconcile.Result{Requeue: false}, nil
