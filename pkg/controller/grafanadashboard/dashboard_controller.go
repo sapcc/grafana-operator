@@ -301,10 +301,10 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 	}
 
 	for _, g := range gr.Items {
-		client, err := r.getClient(&g)
-		if err != nil {
-			log.Error(err, "error adding default dashboard")
-			return err
+		client, cerr := r.getClient(&g)
+		if cerr != nil {
+			log.Error(cerr, "error adding default dashboard")
+			return cerr
 		}
 		if g.Status.Phase != grafanav1alpha1.PhaseReconciling {
 			err = fmt.Errorf("grafana instance %s not yet ready", g.GetName())
