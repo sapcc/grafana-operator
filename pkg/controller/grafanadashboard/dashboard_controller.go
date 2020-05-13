@@ -98,6 +98,7 @@ func (r *ReconcileGrafanaDashboard) Reconcile(request reconcile.Request) (reconc
 		}
 		return reconcile.Result{Requeue: false}, nil
 	}
+	// this is needed when a grafana instances is created for the first time.
 	if err := r.client.Get(context.Background(), types.NamespacedName{Namespace: request.Namespace, Name: request.Name}, &grafanav1alpha1.Grafana{}); err == nil {
 		if err := r.addDefaultDashboards(request); err != nil {
 			log.Error(err, fmt.Sprintf("cannot set default dashboard for %s", request.Name))
