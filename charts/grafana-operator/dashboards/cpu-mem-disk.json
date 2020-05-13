@@ -16,6 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 102,
+  "iteration": 1589379772732,
   "links": [],
   "panels": [
     {
@@ -51,11 +52,13 @@
       },
       "id": 5,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -145,11 +148,13 @@
       },
       "id": 6,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -240,11 +245,13 @@
       },
       "id": 8,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -334,11 +341,13 @@
       },
       "id": 10,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -421,7 +430,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -452,5 +461,5 @@
   "timezone": "browser",
   "title": "GaaS CPU Mem Disk",
   "uid": "1wpkJ-qWk",
-  "version": 5
+  "version": 12
 }

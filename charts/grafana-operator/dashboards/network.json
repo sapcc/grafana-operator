@@ -19,7 +19,7 @@
   "links": [],
   "panels": [
     {
-      "content": "\n### network information\n\n\n",
+      "content": "\n### Network Information\n\n\n",
       "gridPos": {
         "h": 2,
         "w": 24,
@@ -51,11 +51,13 @@
       },
       "id": 7,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -145,11 +147,13 @@
       },
       "id": 9,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -239,11 +243,13 @@
       },
       "id": 10,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -333,11 +339,13 @@
       },
       "id": 11,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -420,7 +428,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -451,5 +459,5 @@
   "timezone": "browser",
   "title": "GaaS Network",
   "uid": "GbaZV-qWz",
-  "version": 13
+  "version": 16
 }
