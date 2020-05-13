@@ -5,6 +5,9 @@ metadata:
   namespace: {{.Release.Namespace}}
   labels: 
     grafana: templates
+  annotations:
+    "helm.sh/hook": post-install
+
 spec:
   name: sapcc_maia.yaml
   datasources:
