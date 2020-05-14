@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 161,
+  "id": 117,
   "links": [],
   "panels": [
     {
@@ -44,18 +44,20 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 12,
+        "h": 6,
+        "w": 24,
         "x": 0,
         "y": 2
       },
       "id": 1,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -82,7 +84,7 @@
           "expr": "snmp_f5_ltmVirtualServStatClientCurConns",
           "format": "time_series",
           "intervalFactor": 4,
-          "legendFormat": "{{lb_id}}",
+          "legendFormat": "{{ ltmVirtualServStatName }}",
           "period": "300",
           "refId": "A",
           "step": 10
@@ -92,7 +94,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "number of current connections by load balancer",
+      "title": "number of current connections by lb listener",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -138,112 +140,20 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 2
-      },
-      "id": 5,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "aggregator": "avg",
-          "dimensions": [],
-          "error": "No metric specified",
-          "expr": "ceil(rate(snmp_f5_ltmVirtualServStatClientCurConns{}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 4,
-          "legendFormat": "{{lb_id}}",
-          "period": "300",
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "number of connections/sec by load balancer (avg last 5min)",
-      "tooltip": {
-        "shared": false,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
+        "h": 6,
+        "w": 24,
         "x": 0,
-        "y": 9
+        "y": 8
       },
       "id": 3,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -271,7 +181,7 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "{{lb_id}}",
+          "legendFormat": "{{ ltmVirtualServStatName }}",
           "period": "300",
           "refId": "A",
           "step": 10
@@ -281,7 +191,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "network traffic in by load balancer (avg last 5min)",
+      "title": "network traffic in by lb listener (avg last 5min)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -327,18 +237,20 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 9
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 14
       },
       "id": 4,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -366,7 +278,7 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "{{lb_id}}",
+          "legendFormat": "{{ ltmVirtualServStatName }}",
           "period": "300",
           "refId": "A",
           "step": 10
@@ -376,7 +288,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "network traffic out by load balancer (avg last 5min)",
+      "title": "network traffic out by lb listener (avg last 5min)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -393,6 +305,102 @@
       "yaxes": [
         {
           "format": "Bps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "maia-prometheus",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 5,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "aggregator": "avg",
+          "dimensions": [],
+          "error": "No metric specified",
+          "expr": "ceil(rate(snmp_f5_ltmVirtualServStatClientCurConns{}[5m]))",
+          "format": "time_series",
+          "intervalFactor": 4,
+          "legendFormat": "{{ ltmVirtualServStatName }}",
+          "period": "300",
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "number of connections/sec by lb listener (avg last 5min)",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -453,5 +461,5 @@
   "timezone": "browser",
   "title": "GaaS Load Balancer",
   "uid": "86Cf3ASZz",
-  "version": 12
+  "version": 17
 }
