@@ -12,6 +12,7 @@ metadata:
     app: grafana
   annotations:
     "helm.sh/hook": post-install
+    "helm.sh/hook": post-upgrade
 
 spec:
   name: dashboards-limes-overview.json
