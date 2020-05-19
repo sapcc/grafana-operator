@@ -23,7 +23,7 @@ const (
 	GrafanaLogsPath                 = "/var/log/grafana"
 	GrafanaPluginsPath              = "/var/lib/grafana/plugins"
 	GrafanaProvisioningPath         = "/etc/grafana/provisioning/"
-	PluginsInitContainerImage       = "quay.io/integreatly/grafana_plugins_init"
+	PluginsInitContainerImage       = "grafana_plugins_init/monsoon/grafana_plugins_init"
 	PluginsInitContainerTag         = "0.0.2"
 	PluginsUrl                      = "https://grafana.com/api/plugins/%s/versions/%s"
 	RequeueDelay                    = time.Duration(time.Minute * 15)
