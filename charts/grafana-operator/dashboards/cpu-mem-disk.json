@@ -16,7 +16,6 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 102,
-  "iteration": 1589379772732,
   "links": [],
   "panels": [
     {
@@ -461,5 +460,5 @@
   "timezone": "browser",
   "title": "GaaS CPU Mem Disk",
   "uid": "1wpkJ-qWk",
-  "version": 12
+  "version": 15
 }

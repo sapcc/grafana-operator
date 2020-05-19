@@ -6,7 +6,7 @@ metadata:
   labels: 
     grafana: templates
   annotations:
-    "helm.sh/hook": post-install
+    "helm.sh/hook": post-upgrade
 
 spec:
   name: sapcc_maia.yaml
