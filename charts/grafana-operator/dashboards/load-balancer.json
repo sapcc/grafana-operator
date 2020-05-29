@@ -16,10 +16,11 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 117,
+  "iteration": 1590754714781,
   "links": [],
   "panels": [
     {
-      "content": "\n### load balancer information\n\n\n\n",
+      "content": "\n### Load Balancer information\n\n\n\n",
       "gridPos": {
         "h": 2,
         "w": 24,
@@ -44,8 +45,8 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 24,
+        "h": 9,
+        "w": 11,
         "x": 0,
         "y": 2
       },
@@ -53,13 +54,13 @@
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -81,10 +82,10 @@
           "aggregator": "avg",
           "dimensions": [],
           "error": "No metric specified",
-          "expr": "snmp_f5_ltmVirtualServStatClientCurConns",
+          "expr": "sum(label_replace(snmp_f5_ltmVirtualServStatClientCurConns{ltmVirtualServStatName=~\"/$partition/$lb/($vs)\"}, \"ls\", \"$1\", \"ltmVirtualServStatName\", \"^/net_.+/lb_.+/(.+)\")) by (ls)",
           "format": "time_series",
           "intervalFactor": 4,
-          "legendFormat": "{{ ltmVirtualServStatName }}",
+          "legendFormat": "{{ ls }}",
           "period": "300",
           "refId": "A",
           "step": 10
@@ -94,7 +95,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "number of current connections by lb listener",
+      "title": "Connections per listener",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -114,7 +115,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -140,22 +141,118 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 24,
+        "h": 9,
+        "w": 10,
+        "x": 11,
+        "y": 2
+      },
+      "id": 8,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "aggregator": "avg",
+          "dimensions": [],
+          "error": "No metric specified",
+          "expr": "sum(label_replace(ceil(rate(snmp_f5_ltmVirtualServStatClientCurConns{ltmVirtualServStatName=~\"/$partition/$lb/($vs)\"}[5m])), \"ls\", \"$1\", \"ltmVirtualServStatName\", \"^/net_.+/lb_.+/(.+)\")) by (ls)",
+          "format": "time_series",
+          "intervalFactor": 4,
+          "legendFormat": "{{ ls }}",
+          "period": "300",
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "New connections rate/s - last 5m averages",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "maia-prometheus",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 21,
         "x": 0,
-        "y": 8
+        "y": 11
       },
       "id": 3,
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -177,11 +274,11 @@
           "aggregator": "avg",
           "dimensions": [],
           "error": "No metric specified",
-          "expr": "rate(snmp_f5_ltmVirtualServStatClientBytesIn{}[5m])",
+          "expr": "sum(label_replace(rate(snmp_f5_ltmVirtualServStatClientBytesIn{ltmVirtualServStatName=~\"/$partition/$lb/($vs)\"}[5m]), \"ls\", \"$1\", \"ltmVirtualServStatName\", \"^/net_.+/lb_.+/(.+)\")) by (ls)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "{{ ltmVirtualServStatName }}",
+          "legendFormat": "{{ ls }}",
           "period": "300",
           "refId": "A",
           "step": 10
@@ -191,7 +288,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "network traffic in by lb listener (avg last 5min)",
+      "title": "Ingress traffic rate/s - last 5m averages",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -211,7 +308,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -237,119 +334,22 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 24,
-        "x": 0,
-        "y": 14
-      },
-      "id": 4,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "aggregator": "avg",
-          "dimensions": [],
-          "error": "No metric specified",
-          "expr": "rate(snmp_f5_ltmVirtualServStatClientBytesOut{}[5m])",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 4,
-          "legendFormat": "{{ ltmVirtualServStatName }}",
-          "period": "300",
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "network traffic out by lb listener (avg last 5min)",
-      "tooltip": {
-        "shared": false,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "Bps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "maia-prometheus",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 24,
+        "h": 9,
+        "w": 21,
         "x": 0,
         "y": 20
       },
-      "id": 5,
+      "id": 11,
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -371,10 +371,11 @@
           "aggregator": "avg",
           "dimensions": [],
           "error": "No metric specified",
-          "expr": "ceil(rate(snmp_f5_ltmVirtualServStatClientCurConns{}[5m]))",
+          "expr": "sum(label_replace(rate(snmp_f5_ltmVirtualServStatClientBytesOut{ltmVirtualServStatName=~\"/$partition/$lb/($vs)\"}[5m]), \"ls\", \"$1\", \"ltmVirtualServStatName\", \"^/net_.+/lb_.+/(.+)\")) by (ls)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "{{ ltmVirtualServStatName }}",
+          "legendFormat": "{{ ls }}",
           "period": "300",
           "refId": "A",
           "step": 10
@@ -384,7 +385,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "number of connections/sec by lb listener (avg last 5min)",
+      "title": "Egress traffic rate/s - last 5m averages",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -400,11 +401,11 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "Bps",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -427,7 +428,85 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "net_02671253_32ac_4088_94a2_137eba66eaf3",
+          "value": "net_02671253_32ac_4088_94a2_137eba66eaf3"
+        },
+        "datasource": "maia-prometheus",
+        "definition": "label_values(snmp_f5_ltmVirtualServName, snmp_f5_ltmVirtualServName)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Private network (F5 partition)",
+        "multi": false,
+        "name": "partition",
+        "options": [],
+        "query": "label_values(snmp_f5_ltmVirtualServName, snmp_f5_ltmVirtualServName)",
+        "refresh": 1,
+        "regex": "/\\/(.+?)\\/.+/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "lb_175c3d67-e6a1-4e6d-9f12-39bb6fb1230a",
+          "value": "lb_175c3d67-e6a1-4e6d-9f12-39bb6fb1230a"
+        },
+        "datasource": "maia-prometheus",
+        "definition": "label_values(snmp_f5_ltmVirtualServName{snmp_f5_ltmVirtualServName=~\"/$partition/.+\"}, snmp_f5_ltmVirtualServName)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Loadbalancer",
+        "multi": false,
+        "name": "lb",
+        "options": [],
+        "query": "label_values(snmp_f5_ltmVirtualServName{snmp_f5_ltmVirtualServName=~\"/$partition/.+\"}, snmp_f5_ltmVirtualServName)",
+        "refresh": 1,
+        "regex": "/\\/.+?\\/(.+)\\/.+/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "maia-prometheus",
+        "definition": "label_values(snmp_f5_ltmVirtualServName{snmp_f5_ltmVirtualServName=~\"/$partition/$lb/.+\"}, snmp_f5_ltmVirtualServName)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Listener (F5 virtual server)",
+        "multi": false,
+        "name": "vs",
+        "options": [],
+        "query": "label_values(snmp_f5_ltmVirtualServName{snmp_f5_ltmVirtualServName=~\"/$partition/$lb/.+\"}, snmp_f5_ltmVirtualServName)",
+        "refresh": 1,
+        "regex": "/\\/.+?\\/.+\\/(.+)/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-6h",
@@ -461,5 +540,5 @@
   "timezone": "browser",
   "title": "GaaS Load Balancer",
   "uid": "86Cf3ASZz",
-  "version": 17
+  "version": 45
 }
