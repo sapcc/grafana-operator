@@ -92,7 +92,7 @@ func watchSecondaryResource(c controller.Controller, resource runtime.Object) er
 // Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
 func (r *ReconcileGrafanaDashboard) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	if request.Namespace == "grafana-operator" {
-		if err := r.addDefaultDashboards(request); err != nil {
+		if err := r.addDefaultDashboards(request, false); err != nil {
 			log.Error(err, fmt.Sprintf("cannot set default dashboard for %s", request.Name))
 			return reconcile.Result{Requeue: true}, nil
 		}
@@ -100,7 +100,7 @@ func (r *ReconcileGrafanaDashboard) Reconcile(request reconcile.Request) (reconc
 	}
 	// this is needed when a grafana instances is created for the first time.
 	if err := r.client.Get(context.Background(), types.NamespacedName{Namespace: request.Namespace, Name: request.Name}, &grafanav1alpha1.Grafana{}); err == nil {
-		if err := r.addDefaultDashboards(request); err != nil {
+		if err := r.addDefaultDashboards(request, true); err != nil {
 			log.Error(err, fmt.Sprintf("cannot set default dashboard for %s", request.Name))
 			return reconcile.Result{Requeue: true}, nil
 		}
@@ -283,7 +283,7 @@ func (r *ReconcileGrafanaDashboard) manageError(dashboard *grafanav1alpha1.Grafa
 	}
 }
 
-func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Request) (err error) {
+func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Request, resetHash bool) (err error) {
 	log.Info(fmt.Sprintf("start adding default dashboards %s", request.Name))
 	gr := &grafanav1alpha1.GrafanaList{}
 	if err = r.client.List(r.context, gr); err != nil {
@@ -317,7 +317,7 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 		for _, d := range db.Items {
 			pipeline := NewDashboardPipeline(&d, g.Spec.Compat.FixAnnotations, g.Spec.Compat.FixHeights)
 			knownHash, ok := g.Spec.Config.Dashboards.DashboardHash[d.Name]
-			if !ok {
+			if !ok || resetHash {
 				knownHash = ""
 			}
 			processed, err := pipeline.ProcessDashboard(knownHash)
@@ -342,6 +342,7 @@ func (r *ReconcileGrafanaDashboard) addDefaultDashboards(request reconcile.Reque
 				err = fmt.Errorf("error adding default dashboard to grafana instance %s: error %s", g.GetName(), err.Error())
 				continue
 			}
+			log.Info(fmt.Sprintf("default dashboard added to grafana instance %s", g.GetName()))
 		}
 	}
 
