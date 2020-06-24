@@ -32,6 +32,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
           - manager
+          args:
+          - "-grafana-image-tag={{ .Values.grafana.image.tag }}"
           ports:
             - name: metrics
               containerPort: 8080

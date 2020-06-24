@@ -47,7 +47,9 @@ record: {}
 
 openstack: {}
 
-grafana: {}
+grafana:
+  image:
+    tag: v7.0.x
 
 apiserver: {}
 
