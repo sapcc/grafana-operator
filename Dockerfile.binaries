@@ -9,4 +9,5 @@ ARG VERSION
 RUN make all
 
 FROM scratch as grafana-operator-binaries
+LABEL source_repository "https://github.com/sapcc/grafana-operator"
 COPY --from=builder /go/src/github.com/integr8ly/grafana-operator/bin/linux/* /
