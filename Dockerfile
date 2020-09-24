@@ -1,6 +1,6 @@
 ARG VERSION=latest
 
-FROM hub.global.cloud.sap/monsoon/grafana-operator-binaries:$VERSION as grafana-operator-binaries
+FROM  keppel.eu-de-1.cloud.sap/ccloud/grafana-operator-binaries:$VERSION as grafana-operator-binaries
 
 FROM alpine:3.8 as grafana-operator
 LABEL maintainer "Stefan Hipfel <stefan.hipfel@sap.com>"
