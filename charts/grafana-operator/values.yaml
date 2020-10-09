@@ -9,7 +9,7 @@ region: "qa-de-1"
 image:
   registry: keppel.eu-de-1.cloud.sap/ccloud
   pullPolicy: ""
-  tag: "20201005083839"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
