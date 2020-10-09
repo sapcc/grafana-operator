@@ -28,12 +28,13 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.registry }}grafana-operator:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
           - manager
           args:
           - "-grafana-image-tag={{ .Values.grafana.image.tag }}"
+          - "-grafana-image={{ .Values.image.registry }}grafana"
           ports:
             - name: metrics
               containerPort: 8080

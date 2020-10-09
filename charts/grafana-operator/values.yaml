@@ -7,7 +7,7 @@ replicaCount: 1
 region: "qa-de-1"
 
 image:
-  repository: keppel.eu-de-1.cloud.sap/ccloud/
+  registry: keppel.eu-de-1.cloud.sap/ccloud
   pullPolicy: ""
   tag: "20201005083839"
 
