@@ -7,9 +7,9 @@ replicaCount: 1
 region: "qa-de-1"
 
 image:
-  repository: hub.global.cloud.sap/monsoon/grafana-operator
-  pullPolicy: IfNotPresent
-  tag: "c7c1bde1"
+  repository: keppel.eu-de-1.cloud.sap/ccloud/grafana
+  pullPolicy: ""
+  tag: "20201005083839"
 
 imagePullSecrets: []
 nameOverride: ""
