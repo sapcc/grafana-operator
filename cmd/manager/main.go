@@ -36,6 +36,8 @@ var flagImage string
 var flagImageTag string
 var flagPluginsInitContainerImage string
 var flagPluginsInitContainerTag string
+var flagProxyContainerImage string
+var flagProxyContainerImageTag string
 var flagNamespaces string
 var scanAll bool
 var syncPeriod int
@@ -58,6 +60,8 @@ func init() {
 	flagset.StringVar(&flagImageTag, "grafana-image-tag", "", "Overrides the default Grafana image tag")
 	flagset.StringVar(&flagPluginsInitContainerImage, "grafana-plugins-init-container-image", "", "Overrides the default Grafana Plugins Init Container image")
 	flagset.StringVar(&flagPluginsInitContainerTag, "grafana-plugins-init-container-tag", "", "Overrides the default Grafana Plugins Init Container tag")
+	flagset.StringVar(&flagProxyContainerImage, "grafana-proxy-container-image", "", "Overrides the default Grafana Proxy Container image")
+	flagset.StringVar(&flagProxyContainerImageTag, "grafana-proxy-container-image-tag", "", "Overrides the default Grafana Proxy Container image tag")
 	flagset.StringVar(&flagNamespaces, "namespaces", "", "Namespaces to scope the interaction of the Grafana operator. Mutually exclusive with --scan-all")
 	flagset.BoolVar(&scanAll, "scan-all", true, "Scans all namespaces for dashboards")
 	flagset.IntVar(&syncPeriod, "sync-period", 10, "SyncPeriod determines the minimum frequency at which watched resources are reconciled.")
@@ -124,6 +128,8 @@ func main() {
 	controllerConfig.AddConfigItem(config2.ConfigGrafanaImageTag, flagImageTag)
 	controllerConfig.AddConfigItem(config2.ConfigPluginsInitContainerImage, flagPluginsInitContainerImage)
 	controllerConfig.AddConfigItem(config2.ConfigPluginsInitContainerTag, flagPluginsInitContainerTag)
+	controllerConfig.AddConfigItem(config2.ConfigGrafanaProxyImage, flagProxyContainerImage)
+	controllerConfig.AddConfigItem(config2.ConfigGrafanaProxyImageTag, flagProxyContainerImageTag)
 	controllerConfig.AddConfigItem(config2.ConfigOperatorNamespace, "grafana-operator")
 	controllerConfig.AddConfigItem(config2.ConfigDashboardLabelSelector, "")
 

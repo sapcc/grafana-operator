@@ -35,6 +35,10 @@ spec:
           args:
           - "-grafana-image-tag={{ .Values.grafana.image.tag }}"
           - "-grafana-image={{ .Values.image.registry }}/grafana"
+          - "grafana-plugins-init-container-image={{ .Values.image.registry }}/grafana_plugins_init"
+          - "grafana-plugins-init-container-tag=0.0.2"
+          - "-grafana-proxy-container-image={{  .Values.image.registry }}/dex"
+          - "-grafana-proxy-container-image-tag=8373c31b3e2d96ad3a7313227aa1bb8c59ddca39"
           ports:
             - name: metrics
               containerPort: 8080

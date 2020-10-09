@@ -23,7 +23,7 @@ const (
 	GrafanaLogsPath                 = "/var/log/grafana"
 	GrafanaPluginsPath              = "/var/lib/grafana/plugins"
 	GrafanaProvisioningPath         = "/etc/grafana/provisioning/"
-	PluginsInitContainerImage       = "hub.global.cloud.sap/monsoon/grafana_plugins_init"
+	PluginsInitContainerImage       = "keppel.eu-de-1.cloud.sap/ccloud/grafana_plugins_init"
 	PluginsInitContainerTag         = "0.0.2"
 	PluginsUrl                      = "https://grafana.com/api/plugins/%s/versions/%s"
 	RequeueDelay                    = time.Duration(time.Minute * 15)
