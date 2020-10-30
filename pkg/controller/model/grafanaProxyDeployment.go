@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+
 	"github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
 	"github.com/integr8ly/grafana-operator/v3/pkg/controller/config"
 	v1 "k8s.io/api/apps/v1"
@@ -56,7 +57,7 @@ func getProxyPodAnnotations(cr *v1alpha1.GrafanaProxy) map[string]string {
 	}
 
 	// Add fixed annotations
-	annotations["vice-president"] = "true"
+	annotations["kubernetes.io/tls-acme"] = "true"
 	//annotations["prometheus.io/scrape"] = "true"
 	//annotations["prometheus.io/port"] = fmt.Sprintf("%v", 80)
 	return annotations

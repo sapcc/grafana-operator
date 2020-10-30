@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    vice-president: "true"
+    kubernetes.io/tls-acme: "true"
   name: grafana-api-ingress
   namespace: {{.Release.Namespace}}
 spec:

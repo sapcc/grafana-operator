@@ -59,7 +59,7 @@ func GrafanaProxyIngress(cr *v1alpha1.GrafanaProxy) *v1beta1.Ingress {
 func GrafanaProxyIngressReconciled(cr *v1alpha1.GrafanaProxy, currentState *v1beta1.Ingress) *v1beta1.Ingress {
 	reconciled := currentState.DeepCopy()
 	reconciled.Labels = getProxyPodLabels(cr)
-	reconciled.Annotations = map[string]string{"vice-president": "true"}
+	reconciled.Annotations = map[string]string{"kubernetes.io/tls-acme": "true"}
 	reconciled.Spec = getProxyIngressSpec(cr)
 	return reconciled
 }

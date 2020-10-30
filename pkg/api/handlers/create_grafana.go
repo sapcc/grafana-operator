@@ -138,7 +138,7 @@ func (d *createGrafana) paramsToGrafana(gc *models.Grafana, p *models.Principal)
 				Hostname:      hostname,
 				TLSEnabled:    true,
 				Enabled:       true,
-				Annotations:   map[string]string{"vice-president": "true"},
+				Annotations:   map[string]string{"kubernetes.io/tls-acme": "true"},
 				TLSSecretName: "tls-" + strings.ReplaceAll(hostname, ".", "-"),
 			},
 			DashboardLabelSelector: []*metav1.LabelSelector{{
