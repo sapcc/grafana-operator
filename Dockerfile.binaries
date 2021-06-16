@@ -1,4 +1,4 @@
-FROM golang:1.13.6-alpine3.10 as builder
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/golang:1.13.6-alpine3.10 as builder
 WORKDIR /go/src/github.com/integr8ly/grafana-operator/
 RUN apk add --no-cache make git curl bash
 RUN curl -Lf https://github.com/alecthomas/gometalinter/releases/download/v2.0.11/gometalinter-2.0.11-linux-amd64.tar.gz \
